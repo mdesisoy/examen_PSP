@@ -9,12 +9,14 @@
 #4:2 con PT=2  CT=4 y X=2 (0,5 puntos) CASO 2
 #2:10 con PT=1  CT=10 y X=4 (0,5 puntos) CASO 3
 
+#¡¡¡¡NO MIRAR ESTE FICHERO MIRAR EL CÓDIGO DE CADA CASO!!!!!
+
 import threading
 import time
 import random
 import queue
 
-#Variables globales CASO 1
+#Variables globales 
 PT=None
 CT=None
 X=None
@@ -62,23 +64,6 @@ class Consumidor(threading.Thread):
             time.sleep(CT)
         print("Consumidor termina")
 
-def main():
-    global PT
-    global CT
-    global X
-    PT=1
-    CT=4
-    X=3
-    cola = queue.Queue()
-    productor = Productor(cola)
-    consumidor = Consumidor(cola)
-    productor.start()
-    consumidor.start()
-    productor.join()
-    consumidor.join()
-
-if __name__ == "__main__":
-    main()
 
 
 
