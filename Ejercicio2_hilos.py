@@ -1,13 +1,6 @@
-#Get a list of files (from the current directory or from all the files in the “home” folder. 
-#Process each file: Pista os.listdir():
-#ejercicio 1. get size of each file 
-#ejercicio 2. count how many vowels(vocales) appear in the file. 
-#write (1) and (2) as values in a python dictionary using the filename as a key (1 punto)
-#The script should accept the number of threads to use required as user INPUT. (2 puntos)
-#Make (2) thread safe using locks (2 puntos)
-
 import os
-import threading
+import multiprocessing
+
 
 #LISTA DE FICHERO
 def get_listaFicheros():
@@ -51,31 +44,31 @@ def counting(filename):
     return vowel
 
 
-#crear diccionario con los valores del ejercicio 1 y 2 usando el nombre del fichero como clave
-def diccionario(listaFicheros, tamanyoFicheros):
-    dic = {}
+#Numero de hilos requeridos por el usuario
+def get_numHilos():
+    num_hilos = int(input("Introduzca el numero de hilos: "))
+    return num_hilos
+
+#crear hilos segun get_numHilo con lock para crear el diccionario
+def worker(listaFicheros, tamanyoFicheros, dic, lock):
     for i in range(len(listaFicheros)):
         dic[listaFicheros[i]] = tamanyoFicheros[i], counting(listaFicheros[i])
-    return dic
-
-#Numero de hilos requeridos por el usuario
-#def get_numHilos():
-    #num_hilos = int(input("Introduzca el numero de hilos: "))
-    #return num_hilos
+    lock.release()
 
 
-
-#defino el main
 def main():
-
     listaFicheros = get_listaFicheros()
     tamanyoFicheros = get_tamanyoFicheros(listaFicheros)
-    dic = diccionario(listaFicheros, tamanyoFicheros)
+    num_hilos = get_numHilos()
+    dic = {}
+    lock = multiprocessing.Lock()
+    lock.acquire()
+    for i in range(num_hilos):
+        p = multiprocessing.Process(target=worker, args=(listaFicheros, tamanyoFicheros, dic, lock))
+        p.start()
+    lock.acquire()
     print(dic)
-    #num_hilos = get_numHilos()
-    #parte del thread que no se
-    
 
 if __name__ == "__main__":
     main()
-    
+
