@@ -66,7 +66,6 @@ def main():
     CT=4
     X=2
     cola = queue.Queue()
-    cola = queue.Queue()
     productores = [Productor(cola) for i in range(4)]
     consumidores = [Consumidor(cola) for i in range(2)]
     for p in productores:
