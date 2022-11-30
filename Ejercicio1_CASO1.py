@@ -58,7 +58,7 @@ class Consumidor(threading.Thread):
             print("MCD de ",lista," es: ",mcd(lista))
             lista=[]
             time.sleep(CT)
-        print("Consumidor termina")
+        print("Consumidor termina") #No lo va a sacar porque el consumidor se queda esperando a que el productor le de algo
 
 def main():
     global PT, CT, X

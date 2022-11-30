@@ -8,23 +8,19 @@
 
 import os
 import threading
-import time
-import random
-import queue
-import sys
 
-#get list of files
-def get_list_files():
-    current_dir = os.getcwd()
-    list_files = os.listdir(current_dir)
-    return list_files
+#LISTA DE FICHERO
+def get_listaFicheros():
+    directorio= os.getcwd()
+    listaFicheros = os.listdir(directorio)
+    return listaFicheros
 
-#ejercicio 1. get size of each file from list_files
-def get_size_file(list_files):
-    size_files = []
-    for file in list_files:
-        size_files.append(os.path.getsize(file))
-    return size_files
+#Obtener el tamaño de cada fichero de la lista de listaFicheros
+def get_tamanyoFicheros(listaFicheros):
+    tamanyoFicheros = []
+    for f in listaFicheros:
+        tamanyoFicheros.append(os.path.getsize(f))
+    return tamanyoFicheros
 
     #file_stats = os.stat(filename)
     #print(file_stats)
@@ -72,7 +68,32 @@ def counting(filename):
     print("Number of vowels in ", filename, " = ", vowel)
     print("New Lines in ", filename, " = ", line)
     print("Number of characters in ", filename, " = ", character)
-  
-  
-# Calling the function counting which gives the desired output
-counting('Myfile.txt')
+
+
+#crear diccionario con los valores del ejercicio 1 y 2 usando el nombre del fichero como clave
+def diccionario(listaFicheros, tamanyoFicheros):
+    dic = {}
+    for i in range(len(listaFicheros)):
+        dic[listaFicheros[i]] = tamanyoFicheros[i]
+    return dic
+
+#Numero de hilos requeridos por el usuario
+def get_numHilos():
+    num_hilos = int(input("Introduzca el numero de hilos: "))
+    return num_hilos
+
+
+
+#defino el main
+def main():
+    listaFicheros = get_listaFicheros()
+    tamanyoFicheros = get_tamanyoFicheros(listaFicheros)
+    dic = diccionario(listaFicheros, tamanyoFicheros)
+    print(dic)
+    num_hilos = get_numHilos()
+    #parte del thread que no se
+    
+
+if __name__ == "__main__":
+    main()
+    
